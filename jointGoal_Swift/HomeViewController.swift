@@ -128,6 +128,8 @@ extension HomeViewController {
         
         buttonClickChange(btn: greenBtn)
         buttonClickChange(btn: pinkBtn)
+        
+        buttonReset(btn: blueBtn)
     }
     
     @objc func greenClick() {
@@ -135,6 +137,11 @@ extension HomeViewController {
         self.view.bringSubviewToFront(self.greenBtn)
         self.view.sendSubviewToBack(self.blueBtn)
         self.view.sendSubviewToBack(self.pinkBtn)
+        
+        buttonClickChange(btn: blueBtn)
+        buttonClickChange(btn: pinkBtn)
+        
+        buttonReset(btn: greenBtn)
      
     }
     
@@ -143,6 +150,11 @@ extension HomeViewController {
         self.view.bringSubviewToFront(self.pinkBtn)
         self.view.sendSubviewToBack(self.blueBtn)
         self.view.sendSubviewToBack(self.greenBtn)
+        
+        buttonClickChange(btn: greenBtn)
+        buttonClickChange(btn: blueBtn)
+        
+        buttonReset(btn: pinkBtn)
      
     }
     
@@ -153,5 +165,15 @@ extension HomeViewController {
         }
         btn.layer.cornerRadius = 36
         btn.layer.opacity = 0.6
+    }
+    
+    func buttonReset(btn: UIButton) {
+        btn.snp.makeConstraints {
+            $0.width.height.equalTo(80)
+            $0.top.equalTo(redView).offset(-40)
+        }
+        print("reset \(btn.frame)")
+        btn.layer.cornerRadius = 40
+        btn.layer.opacity = 1
     }
 }

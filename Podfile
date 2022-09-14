@@ -8,5 +8,5 @@ target 'jointGoal_Swift' do
   # Pods for jointGoal_Swift
 
 	pod 'SnapKit', '~> 5.6.0'
-
+	pod 'Then'
 end

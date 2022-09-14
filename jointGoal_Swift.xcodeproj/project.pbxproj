@@ -49,7 +49,6 @@
 		0AE415CC28C0ED4F0043E4BA = {
 			isa = PBXGroup;
 			children = (
-				0AE415ED28C0EED50043E4BA /* ViewModel */,
 				0AE415EC28C0EED00043E4BA /* Model */,
 				0AE415D728C0ED4F0043E4BA /* jointGoal_Swift */,
 				0AE415D628C0ED4F0043E4BA /* Products */,
@@ -87,13 +86,6 @@
 				0AE415F028C0F1100043E4BA /* Goal */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		0AE415ED28C0EED50043E4BA /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		0AE415F028C0F1100043E4BA /* Goal */ = {

@@ -37,7 +37,7 @@ class HomeViewController: UIViewController {
             $0.width.height.equalTo(80)
         }
         $0.layer.cornerRadius = 40
-        $0.addTarget(self, action: #selector(greenClick), for: .touchUpInside)
+        $0.addTarget(self, action: #selector(pinkClick), for: .touchUpInside)
     }
     
 //    lazy var stackView = UIStackView(arrangedSubviews: [blueBtn, greenBtn, pinkBtn]).then {
@@ -65,9 +65,10 @@ class HomeViewController: UIViewController {
         redView.snp.makeConstraints {
             
          //   $0.top.equalTo(self.view.safeAreaLayoutGuide)
-            $0.centerX.centerY.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(-40)
             $0.width.equalTo(320)
-            $0.height.equalTo(380)
+            $0.height.equalTo(420)
             
 //            $0.size.equalTo(CGSize(width: 300, height: 100))
 //            $0.center.equalTo(self.view)
@@ -124,6 +125,9 @@ extension HomeViewController {
         self.view.sendSubviewToBack(self.greenBtn)
         self.view.sendSubviewToBack(self.pinkBtn)
         self.view.bringSubviewToFront(self.blueBtn) // 겹쳐있는 자식들 중 하나를 맨 앞으로 이동
+        
+        buttonClickChange(btn: greenBtn)
+        buttonClickChange(btn: pinkBtn)
     }
     
     @objc func greenClick() {
@@ -134,4 +138,20 @@ extension HomeViewController {
      
     }
     
+    @objc func pinkClick() {
+      
+        self.view.bringSubviewToFront(self.pinkBtn)
+        self.view.sendSubviewToBack(self.blueBtn)
+        self.view.sendSubviewToBack(self.greenBtn)
+     
+    }
+    
+    func buttonClickChange(btn: UIButton) {
+        btn.snp.makeConstraints {
+            $0.width.height.equalTo(72)
+            $0.top.equalTo(redView).offset(-30)
+        }
+        btn.layer.cornerRadius = 36
+        btn.layer.opacity = 0.6
+    }
 }

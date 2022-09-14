@@ -12,9 +12,6 @@ import Then
 class HomeViewController: UIViewController {
     
     var redView = UIView()
-    var blueView = UIView()
-    var greenView = UIView()
-    var pinkView = UIView()
     
     lazy var blueBtn = UIButton().then {
         $0.backgroundColor = .blue
@@ -34,14 +31,30 @@ class HomeViewController: UIViewController {
         $0.addTarget(self, action: #selector(greenClick), for: .touchUpInside)
     }
     
+    lazy var pinkBtn = UIButton().then {
+        $0.backgroundColor = .systemPink
+        $0.snp.makeConstraints {
+            $0.width.height.equalTo(80)
+        }
+        $0.layer.cornerRadius = 40
+        $0.addTarget(self, action: #selector(greenClick), for: .touchUpInside)
+    }
+    
+//    lazy var stackView = UIStackView(arrangedSubviews: [blueBtn, greenBtn, pinkBtn]).then {
+//        $0.axis = .horizontal
+//        $0.distribution = .fillProportionally
+//        $0.alignment = .fill
+//
+//        $0.spacing = 15
+//    }
+    
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
         self.view.backgroundColor = .white
-        
-        viewSetting()
+        self.redView.backgroundColor = .red
         
         snapView()
     }
@@ -61,23 +74,34 @@ class HomeViewController: UIViewController {
             
         }
         
-        view.addSubview(blueBtn)
-        blueBtn.snp.makeConstraints {
-            $0.top.equalTo(redView).offset(-40)
-            $0.left.equalTo(redView).offset(10)
-        }
+//        view.addSubview(stackView)
+//        stackView.snp.makeConstraints {
+//            $0.top.equalTo(redView).offset(-40)
+//            $0.centerX.equalTo(redView)
+//        }
         
+//        blueBtn.snp.makeConstraints {
+//            $0.top.equalTo(redView).offset(-40)
+//            $0.left.equalTo(redView).offset(10)
+//        }
+
         view.addSubview(greenBtn)
         greenBtn.snp.makeConstraints {
             $0.top.equalTo(redView).offset(-40)
-            $0.left.equalTo(blueBtn.snp.right).offset(10)
+            $0.centerX.equalTo(redView)
+            //$0.left.equalTo(blueBtn.snp.right).offset(15)
         }
         
-        view.addSubview(pinkView)
-        pinkView.snp.makeConstraints {
+        view.addSubview(blueBtn)
+        blueBtn.snp.makeConstraints {
             $0.top.equalTo(redView).offset(-40)
-            $0.left.equalTo(greenBtn.snp.right).offset(10)
-            $0.width.height.equalTo(80)
+            $0.right.equalTo(greenBtn.snp.left).offset(-15)
+        }
+
+        view.addSubview(pinkBtn)
+        pinkBtn.snp.makeConstraints {
+            $0.top.equalTo(redView).offset(-40)
+            $0.left.equalTo(greenBtn.snp.right).offset(15)
         }
         
         
@@ -90,18 +114,6 @@ class HomeViewController: UIViewController {
         //        }
         
     }
-    
-    func viewSetting() {
-        
-        redView.backgroundColor = .red
-        
-        greenView.backgroundColor = .green
-        pinkView.backgroundColor = .systemPink
-        
-        
-        greenView.layer.cornerRadius = 40
-        pinkView.layer.cornerRadius = 40
-    }
 }
 
 // MARK: - Function
@@ -110,8 +122,7 @@ extension HomeViewController {
     
     @objc func blueClick() {
         self.view.sendSubviewToBack(self.greenBtn)
-        self.view.sendSubviewToBack(self.pinkView)
-        
+        self.view.sendSubviewToBack(self.pinkBtn)
         self.view.bringSubviewToFront(self.blueBtn) // 겹쳐있는 자식들 중 하나를 맨 앞으로 이동
     }
     
@@ -119,7 +130,7 @@ extension HomeViewController {
       
         self.view.bringSubviewToFront(self.greenBtn)
         self.view.sendSubviewToBack(self.blueBtn)
-        self.view.sendSubviewToBack(self.pinkView)
+        self.view.sendSubviewToBack(self.pinkBtn)
      
     }
     

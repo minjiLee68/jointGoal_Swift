@@ -12,6 +12,8 @@ import Then
 class HomeViewController: UIViewController {
     
     var redView = UIView()
+    let minSize : CGFloat = 50
+    let maxSize : CGFloat = 160
     
     lazy var blueBtn = UIButton().then {
         $0.backgroundColor = .blue
@@ -66,7 +68,7 @@ class HomeViewController: UIViewController {
             
          //   $0.top.equalTo(self.view.safeAreaLayoutGuide)
             $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().offset(-40)
+            $0.centerY.equalToSuperview().offset(-30)
             $0.width.equalTo(320)
             $0.height.equalTo(420)
             
@@ -105,9 +107,6 @@ class HomeViewController: UIViewController {
             $0.left.equalTo(greenBtn.snp.right).offset(15)
         }
         
-        
-        
-        
         //        blueView.snp.makeConstraints { make in
         //            make.top.equalTo(redView.snp.bottom)
         //            make.size.width.height.equalTo(100)
@@ -122,58 +121,60 @@ class HomeViewController: UIViewController {
 extension HomeViewController {
     
     @objc func blueClick() {
+        self.view.bringSubviewToFront(self.blueBtn) // 겹쳐있는 자식들 중 하나를 맨 앞으로 이동
         self.view.sendSubviewToBack(self.greenBtn)
         self.view.sendSubviewToBack(self.pinkBtn)
-        self.view.bringSubviewToFront(self.blueBtn) // 겹쳐있는 자식들 중 하나를 맨 앞으로 이동
         
-        buttonClickChange(btn: greenBtn)
-        buttonClickChange(btn: pinkBtn)
+        buttonClickChange(btn: blueBtn, reset: true)
+        buttonClickChange(btn: greenBtn, reset: false)
+        buttonClickChange(btn: pinkBtn, reset: false)
         
-        buttonReset(btn: blueBtn)
     }
     
     @objc func greenClick() {
       
-        self.view.bringSubviewToFront(self.greenBtn)
         self.view.sendSubviewToBack(self.blueBtn)
+        self.view.bringSubviewToFront(self.greenBtn)
         self.view.sendSubviewToBack(self.pinkBtn)
         
-        buttonClickChange(btn: blueBtn)
-        buttonClickChange(btn: pinkBtn)
+        buttonClickChange(btn: blueBtn, reset: false)
+        buttonClickChange(btn: greenBtn, reset: true)
+        buttonClickChange(btn: pinkBtn, reset: false)
         
-        buttonReset(btn: greenBtn)
-     
     }
     
     @objc func pinkClick() {
       
-        self.view.bringSubviewToFront(self.pinkBtn)
+        
         self.view.sendSubviewToBack(self.blueBtn)
         self.view.sendSubviewToBack(self.greenBtn)
+        self.view.bringSubviewToFront(self.pinkBtn)
         
-        buttonClickChange(btn: greenBtn)
-        buttonClickChange(btn: blueBtn)
         
-        buttonReset(btn: pinkBtn)
+        buttonClickChange(btn: greenBtn, reset: false)
+        buttonClickChange(btn: blueBtn, reset: false)
+        buttonClickChange(btn: pinkBtn, reset: true)
      
     }
     
-    func buttonClickChange(btn: UIButton) {
-        btn.snp.makeConstraints {
-            $0.width.height.equalTo(72)
-            $0.top.equalTo(redView).offset(-30)
+    func buttonClickChange(btn: UIButton, reset: Bool) {
+        
+        var size : CGFloat = 0
+        if reset {
+            size = maxSize
+        } else {
+            size = minSize
         }
-        btn.layer.cornerRadius = 36
-        btn.layer.opacity = 0.6
-    }
-    
-    func buttonReset(btn: UIButton) {
+//        btn.snp.makeConstraints { (make) in
+//                make.left.top.equalTo(15)
+//                make.bottom.right.equalTo(-15)
+//            }
         btn.snp.makeConstraints {
-            $0.width.height.equalTo(80)
-            $0.top.equalTo(redView).offset(-40)
+            $0.width.height.equalTo(size)
+            //$0.top.equalTo(redView).offset(-40)
         }
         print("reset \(btn.frame)")
-        btn.layer.cornerRadius = 40
-        btn.layer.opacity = 1
+//        btn.layer.cornerRadius = size / 2
+//        btn.layer.opacity = reset == true ? 1 : 0.6
     }
 }
